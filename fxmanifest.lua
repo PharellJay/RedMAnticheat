@@ -3,7 +3,7 @@ rdr3_warning 'I acknowledge that this is a prerelease build of RedM, and I am aw
 game 'rdr3'
 
 author 'PharellJay'
-description 'https://github.com/PharellJay'
+description 'https://github.com/PharellJay' --REMOVE THIS LINK ON LIVE SERVERS
 version '1.4.9'
 
 lua54 'yes'
@@ -21,10 +21,6 @@ server_scripts {
 server_exports {
     'Whitelistbyid',
 }
-
--- client.lua is intentionally NOT listed here. It is delivered to players at
--- runtime by the built-in clientloader (clientloader.lua), so it never ends up
--- in the client download manifest / file cache and cannot be dumped client-side.
 
 ui_page 'html/index.html'
 

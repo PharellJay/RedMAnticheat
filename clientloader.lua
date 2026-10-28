@@ -1,17 +1,5 @@
--- deadeye_anticheat: built-in clientloader
---
--- The anticheat's client Lua is delivered to each player at runtime instead of
--- being shipped as a normal client_script, so it never lands in the client file
--- cache / download manifest and cannot be dumped from the client side. The
--- loading itself is intentionally non-configurable (always on, fixed file list).
--- Only the response to a forged/repeated payload request is configurable, via
--- the Clientloader module (Config.Punishments.Clientloader, Config.Clientloader
--- and SConfig.Clientloader), handled through the shared Punish() pipeline just
--- like every other module.
-
 local resource = GetCurrentResourceName()
 
--- Client files served through the clientloader. Hardcoded on purpose.
 local ProtectedFiles = {
     "client.lua",
 }
@@ -46,15 +34,10 @@ local function dec(data)
     end))
 end
 
--- Obfuscated, dedicated event names (do not collide with deadeye_anticheat:*).
--- Both sides derive the same strings from the resource name.
 local RequestEvent = enc("clientloader_req_" .. resource)
 local ResponseEvent = enc("clientloader_res_" .. resource)
 
 if IsDuplicityVersion() then
-    ----------------------------------------------------------------------------
-    -- SERVER: read the protected files once, hand them out on request.
-    ----------------------------------------------------------------------------
     local payload = {}
 
     for _, file in ipairs(ProtectedFiles) do
@@ -77,15 +60,11 @@ if IsDuplicityVersion() then
 
             TriggerClientEvent(ResponseEvent, src, payload)
         else
-            -- Devmode restarts re-trigger the request legitimately; never
-            -- self-punish while developing.
             if Config and Config.Devmode then
                 TriggerClientEvent(ResponseEvent, src, payload)
                 return
             end
 
-            -- An already-served client asking again is treated as a dump/replay
-            -- attempt and runs through the normal punishment pipeline.
             if Punish then
                 Punish(src, "Clientloader")
             else
@@ -98,9 +77,6 @@ if IsDuplicityVersion() then
         delivered[source] = nil
     end)
 else
-    ----------------------------------------------------------------------------
-    -- CLIENT: request the files once the session is up, then run them.
-    ----------------------------------------------------------------------------
     Citizen.CreateThread(function()
         while not NetworkIsSessionStarted() do
             Citizen.Wait(0)
