@@ -234,6 +234,11 @@ Config.Punishments = {
         Kick = true,
         Ban = true,
     },
+    Clientloader = { --The clientloader itself is always on; this only controls the response to a forged/repeated client-file request
+        Log = true,
+        Kick = true,
+        Ban = true,
+    },
 }
 
 ---------------------------
@@ -837,3 +842,15 @@ Config.AdvancedProtection = { --RECOMMENDED
 }
 --See config_secure for a tutorial on how to install the AdvancedProtection!!!!!!!!
 --OTHERWISE IT WON'T WORK!!!!!!
+
+---------
+--Clientloader
+---------
+--The client files are always loaded through the built-in clientloader (this cannot be turned off).
+--These values only decide what happens when a client requests its protected files a second time (dump/replay attempt).
+--Enter the webhook link in config_secure.lua (SConfig.Clientloader).
+Config.Clientloader = {
+    Webhooktext = "Code: AC28 | The player tried to re-request protected client files (possible dump attempt)!",
+    Kicktext = "Code: AC28",
+    Bantext = "Code: AC28",
+}

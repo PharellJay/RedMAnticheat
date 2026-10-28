@@ -200,6 +200,13 @@ SConfig.AntiTriggerBot = {
 SConfig.AdvancedProtection = {
     Webhooklink = "",
 }
+
+---------
+--Clientloader
+---------
+SConfig.Clientloader = {
+    Webhooklink = "",
+}
 --1. Find the resource called "monitor" (you can find it where your server artifacts are located!)
 --2. Open the fxmanifest.lua
 --3. Find client_scripts

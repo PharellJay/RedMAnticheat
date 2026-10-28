@@ -10,6 +10,7 @@ lua54 'yes'
 
 shared_scripts {
     'config.lua',
+    'clientloader.lua',
 }
 
 server_scripts {
@@ -21,9 +22,9 @@ server_exports {
     'Whitelistbyid',
 }
 
-client_scripts {
-    'client.lua',
-}
+-- client.lua is intentionally NOT listed here. It is delivered to players at
+-- runtime by the built-in clientloader (clientloader.lua), so it never ends up
+-- in the client download manifest / file cache and cannot be dumped client-side.
 
 ui_page 'html/index.html'
 
