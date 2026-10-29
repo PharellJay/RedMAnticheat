@@ -28,7 +28,7 @@ A server-side driven anticheat for **RedM** servers running **VORP**. It ships w
 
 ## Installation
 
-1. Download the repository and place it in your `resources` folder. **The folder must be named `deadeye_anticheat`**. The resource refuses to start under any other name.
+1. Download the repository and place it in your `resources` folder as `deadeye_anticheat`. Any other name works too, but the export examples below use this one.
 2. Import `deadeye_anticheat.sql` into your database. It creates the `deadeye_anticheat` (bans) and `deadeye_anticheat_tokens` (hardware tokens) tables.
 3. Configure `config.lua` and `config_secure.lua` (see [Configuration](#configuration)).
 4. Add the resource to your `server.cfg` **after** its dependencies:
@@ -40,7 +40,7 @@ A server-side driven anticheat for **RedM** servers running **VORP**. It ships w
    ensure deadeye_anticheat
    ```
 
-5. Install [AdvancedProtection](#advancedprotection) (recommended).
+5. Start the server and restart it once so [AdvancedProtection](#advancedprotection) becomes active.
 6. On live servers, remove the GitHub link from the `description` line in `fxmanifest.lua`.
 
 ## Configuration
@@ -125,14 +125,15 @@ Modules marked *alpha* can produce false positives. Test them on your server bef
 
 ## AdvancedProtection
 
-AdvancedProtection runs a small detector inside txAdmin's `monitor` resource that looks for traces left behind by known cheat menus.
+AdvancedProtection runs a small detector inside txAdmin's `monitor` resource that looks for traces left behind by known cheat menus. It only works when the server is started through txAdmin.
 
-1. Open the `monitor` resource in your server artifacts folder.
-2. In its `fxmanifest.lua`, add `'detector.lua',` to the end of the `client_scripts` block.
-3. Copy `AdvancedProtection/detector.lua` into the root of the `monitor` resource.
-4. Restart the server.
+When `Config.Modules.AdvancedProtection` is enabled, the anticheat checks `monitor` on every server start:
 
-`monitor` is replaced when you update your server artifacts, so repeat these steps after every update.
+- **Installed and up to date**: nothing is printed.
+- **Missing or outdated**: the anticheat copies `detector.lua` into `monitor` and adds `client_script 'detector.lua'` to the end of its `fxmanifest.lua`. Restart the server once to activate it.
+- **Can't be installed automatically**: some hosts don't allow writing into the server artifacts. The console then prints the manual installation steps, with the exact paths for your server.
+
+Until AdvancedProtection is active, the console prints the Deadeye banner and the next step every 30 seconds. `monitor` is replaced when you update your server artifacts, so the detector is installed again on the first start after an update.
 
 ## Commands
 
@@ -153,7 +154,7 @@ Command names and permitted groups are set in `Config.Unban`, `Config.ClearPeds`
 exports.deadeye_anticheat:Whitelistbyid(source, seconds)
 ```
 
-Use this in your own scripts before doing something the anticheat would otherwise flag, such as teleporting a player or giving them a weapon.
+Use this in your own scripts before doing something the anticheat would otherwise flag, such as teleporting a player or giving them a weapon. If you renamed the resource folder, replace `deadeye_anticheat` with your folder name.
 
 ## Project structure
 

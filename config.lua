@@ -840,8 +840,8 @@ Config.AdvancedProtection = { --RECOMMENDED
     Kicktext = "Code: AC27",
     Bantext = "Code: AC27",
 }
---See config_secure for a tutorial on how to install the AdvancedProtection!!!!!!!!
---OTHERWISE IT WON'T WORK!!!!!!
+--AdvancedProtection installs itself into txAdmin's resource 'monitor' on server start, restart the server once afterwards.
+--If it can't be installed automatically, the server console prints the manual installation steps every 30 seconds.
 
 ---------
 --Clientloader
