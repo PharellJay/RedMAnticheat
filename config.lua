@@ -841,7 +841,7 @@ Config.AdvancedProtection = { --RECOMMENDED
     Bantext = "Code: AC27",
 }
 --AdvancedProtection installs itself into txAdmin's resource 'monitor' on server start, restart the server once afterwards.
---If it can't be installed automatically, the server console prints the manual installation steps every 30 seconds.
+--If it can't be installed automatically, the server console prints the manual installation steps.
 
 ---------
 --Clientloader

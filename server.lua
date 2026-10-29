@@ -2163,7 +2163,6 @@ if Config.Modules.AdvancedProtection then
         Punish(source, "AdvancedProtection")
     end)
 
-    --Installs the detector into txAdmin's monitor resource, monitor only loads it after a server restart
     local Detectorfile = "detector.lua"
     local Detectorline = "client_script '" .. Detectorfile .. "'"
     local Detectorcode = LoadResourceFile(GetCurrentResourceName(), "AdvancedProtection/" .. Detectorfile)
